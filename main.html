@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>С 23 февраля, Защитник! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(145deg, #0a0f1e 0%, #1a1f2f 100%);
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .game-container {
+            background: rgba(20, 25, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            padding: 24px 20px 32px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 70, 120, 0.2);
+            border: 1px solid rgba(255, 100, 150, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* Шутка про лысого */
+        .joke-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            color: #ffb2c8;
+            text-shadow: 0 0 10px #ff4d7a, 2px 2px 0 #2d1b2e;
+            word-break: break-word;
+        }
+        .joke-title span {
+            display: inline-block;
+            transform: scale(-1, 1);
+            font-size: 32px;
+            filter: drop-shadow(0 0 6px gold);
+        }
+
+        /* Прогресс бар */
+        .progress-section {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffb6d1;
+            margin-bottom: 6px;
+        }
+        .progress-bar-bg {
+            background: #232a3a;
+            height: 24px;
+            border-radius: 100px;
+            padding: 3px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);
+            border: 1px solid #ff4d6d55;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, #ff7eb3, #ff4d6d);
+            height: 100%;
+            border-radius: 100px;
+            width: 0%;
+            transition: width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 12px #ff4d6d;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 2px black;
+            overflow: hidden;
+        }
+        .progress-fill span {
+            z-index: 2;
+            margin-right: 4px;
+        }
+
+        /* Очки */
+        .score-area {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            background: #0f1422cc;
+            padding: 12px;
+            border-radius: 60px;
+            border: 1px solid #ff90b0;
+            box-shadow: inset 0 0 10px #ff2e5b33;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .score-value {
+            color: #ffea9f;
+            font-size: 42px;
+            font-weight: 900;
+            margin-left: 8px;
+            text-shadow: 0 0 15px #ffb347;
+        }
+
+        /* Сердце = Кнопка */
+        .heart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 24px 0 16px;
+            filter: drop-shadow(0 10px 20px #ff2d5a80);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .heart-container:active {
+            transform: scale(0.95);
+        }
+
+        .pixel-heart {
+            width: 180px;
+            height: 180px;
+            background-color: #ff2d5a;
+            position: relative;
+            transform: rotate(45deg);
+            box-shadow: 0 0 0 4px #ffb6d9, 0 0 0 8px #ff2d5a55, 0 0 30px 10px #ff4d6d;
+            transition: width 0.2s, height 0.2s, box-shadow 0.2s, background-color 0.2s;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border-radius: 0; /* Пиксельность */
+        }
+        /* Создаем пиксельный эффект через before/after (классическое сердечко из квадратов) */
+        .pixel-heart::before,
+        .pixel-heart::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: inherit;
+            border-radius: 0;
+            box-shadow: inherit;
+        }
+        .pixel-heart::before {
+            left: -50%;
+            top: 0;
+        }
+        .pixel-heart::after {
+            top: -50%;
+            left: 0;
+        }
+
+        /* Анимация набора шкалы (увеличение + тряска) */
+        .heart-pulse {
+            animation: heartPulse 0.2s ease-out;
+        }
+        @keyframes heartPulse {
+            0% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.2); filter: brightness(1.4); }
+            100% { transform: rotate(45deg) scale(1); }
+        }
+
+        /* Анимация вращения и блесток при победе */
+        .heart-win {
+            animation: winSpin 0.8s infinite linear, sparkle 0.6s infinite alternate !important;
+        }
+        @keyframes winSpin {
+            0% { transform: rotate(45deg) rotateY(0deg); }
+            100% { transform: rotate(45deg) rotateY(360deg); }
+        }
+        @keyframes sparkle {
+            0% { box-shadow: 0 0 0 4px #fffacd, 0 0 0 8px #ffdb58, 0 0 30px 15px gold; opacity: 1; }
+            100% { box-shadow: 0 0 0 4px #ffb6d9, 0 0 0 8px #ff69b4, 0 0 50px 25px #ffd700; opacity: 1; background-color: #ff69b4; }
+        }
+
+        /* Секретное сообщение (изначально скрыто) */
+        .secret-message {
+            margin-top: 30px;
+            background: #1d2333dd;
+            border: 2px dashed #ffb3c6;
+            border-radius: 42px;
+            padding: 24px 18px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            transition: opacity 0.5s, transform 0.4s;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+        .secret-message.show {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .congrats-title {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #fee3b8, #ffb6c1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .main-text {
+            font-size: 20px;
+            line-height: 1.5;
+            color: #ffe4ec;
+            margin: 16px 0;
+        }
+        .main-text strong {
+            color: #ffc857;
+            font-size: 24px;
+            display: block;
+            margin: 6px 0;
+        }
+
+        .kiss-btn {
+            background: #ff2d5a;
+            border: none;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 18px 24px;
+            border-radius: 60px;
+            margin: 16px 0 8px;
+            width: 100%;
+            box-shadow: 0 10px 0 #941c36, 0 5px 20px #ff9eb5;
+            transition: 0.05s linear;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .kiss-btn:active {
+            transform: translateY(8px);
+            box-shadow: 0 2px 0 #941c36, 0 5px 20px #ff9eb5;
+        }
+        .kiss-output {
+            font-size: 40px;
+            line-height: 1.4;
+            min-height: 70px;
+            letter-spacing: 6px;
+        }
+
+        .small-note {
+            color: #a7b6d0;
+            font-size: 15px;
+            margin-top: 12px;
+        }
+
+        footer {
+            margin-top: 24px;
+            color: #627094;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Шутка про лысого -->
+        <div class="joke-title">
+            <span>🪖</span> ООО, А КТО ЛЫСЫМ БЫЛ? <span>🍼</span>
+        </div>
+
+        <!-- Шкала прогресса -->
+        <div class="progress-section">
+            <div class="progress-label">
+                <span>❤️‍🔥 Наполняем любовью</span>
+                <span id="progress-counter">0/1000</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progress-fill" class="progress-fill" style="width: 0%;"><span id="progress-percent">0%</span></div>
+            </div>
+        </div>
+
+        <!-- Счетчик очков -->
+        <div class="score-area">
+            <span>➕50 за тап</span>
+            <span id="scoreDisplay" class="score-value">0</span>
+        </div>
+
+        <!-- Кликабельное сердце -->
+        <div class="heart-container" id="heartClicker">
+            <div class="pixel-heart" id="pixelHeart"></div>
+        </div>
+
+        <!-- Сообщение о победе (изначально скрыто) -->
+        <div id="winMessage" class="secret-message">
+            <div class="congrats-title">Шкала заполнена успешно!</div>
+            <div class="main-text">
+                Главная награда — моя любовь ❤️<br>
+                Спасибо, что ты мой защитник каждый день.<br>
+                <strong>С 23 февраля, моя бусинка кузенька!</strong>
+            </div>
+            
+            <!-- Доп приз: поцелуйчик -->
+            <button class="kiss-btn" id="kissButton">💋 ЗАБРАТЬ ПОЦЕЛУЙЧИК 💋</button>
+            <div id="kissOutput" class="kiss-output"></div>
+            <div class="small-note">(нажимай, сколько хочешь)</div>
+        </div>
+
+        <footer>ты мой герой 👩‍❤️‍👨</footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Элементы
+            const heartElement = document.getElementById('pixelHeart');
+            const heartContainer = document.getElementById('heartClicker');
+            const progressFill = document.getElementById('progress-fill');
+            const progressCounter = document.getElementById('progress-counter');
+            const progressPercent = document.getElementById('progress-percent');
+            const scoreSpan = document.getElementById('scoreDisplay');
+            const winMessageDiv = document.getElementById('winMessage');
+            const kissButton = document.getElementById('kissButton');
+            const kissOutput = document.getElementById('kissOutput');
+
+            // Переменные состояния
+            let currentScore = 0;
+            const MAX_SCORE = 1000;
+            const POINTS_PER_CLICK = 50;
+            let gameFinished = false; // Победа достигнута?
+
+            // Функция обновления прогресса и сердца
+            function updateProgress() {
+                if (gameFinished) return; // больше не обновляем
+
+                // Считаем проценты (не больше 100)
+                let percent = Math.min((currentScore / MAX_SCORE) * 100, 100);
+                progressFill.style.width = percent + '%';
+                progressPercent.innerText = Math.floor(percent) + '%';
+                progressCounter.innerText = `${currentScore}/${MAX_SCORE}`;
+                scoreSpan.innerText = currentScore;
+
+                // Динамический размер сердца (немного растет, максимум +50px)
+                let baseSize = 180;
+                let extraSize = Math.min((percent / 100) * 60, 60); // до 60px доп
+                let newSize = baseSize + extraSize;
+                heartElement.style.width = newSize + 'px';
+                heartElement.style.height = newSize + 'px';
+
+                // Проверка на победу (1000 очков)
+                if (currentScore >= MAX_SCORE && !gameFinished) {
+                    gameFinished = true;
+                    currentScore = MAX_SCORE; // фиксируем 1000
+                    // Обновим до 100%
+                    progressFill.style.width = '100%';
+                    progressPercent.innerText = '100%';
+                    progressCounter.innerText = `${MAX_SCORE}/${MAX_SCORE}`;
+                    scoreSpan.innerText = MAX_SCORE;
+
+                    // Останавливаем дальнейшее увеличение
+                    // Запускаем победную анимацию на сердце
+                    heartElement.classList.add('heart-win');
+                    // Убираем класс pulse, если был
+                    heartElement.classList.remove('heart-pulse');
+
+                    // Показываем секретное сообщение
+                    winMessageDiv.classList.add('show');
+                }
+            }
+
+            // Функция тапа
+            function handleTap(e) {
+                e.preventDefault(); // для мобильников
+
+                if (gameFinished) {
+                    // Если уже победили, тап не должен добавлять очки
+                    // но сердечко может крутиться и так, но мы ничего не делаем
+                    return;
+                }
+
+                // +50 очков (но не больше максимума)
+                currentScore = Math.min(currentScore + POINTS_PER_CLICK, MAX_SCORE);
+
+                // Анимация пульса
+                heartElement.classList.add('heart-pulse');
+                setTimeout(() => {
+                    heartElement.classList.remove('heart-pulse');
+                }, 200);
+
+                // Обновляем прогресс, размер сердца
+                updateProgress();
+            }
+
+            // Вешаем события на сердечко (и на контейнер для надежности)
+            heartContainer.addEventListener('click', handleTap);
+            heartContainer.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // чтобы не было двойного срабатывания и зуума
+                handleTap(e);
+            });
+
+            // Инициализация
+            updateProgress();
+
+            // Обработка кнопки поцелуйчика
+            kissButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Добавляем поцелуйчики в вывод
+                let currentKisses = kissOutput.innerText;
+                // Можно накапливать, ограничим длину для красоты
+                if (currentKisses.length > 30) {
+                    kissOutput.innerText = '💋💋💋💋💋💋💋💋💋💋'; // сброс до кучи
+                } else {
+                    kissOutput.innerText = currentKisses + '💋';
+                }
+                // маленькая дополнительная анимация на сердечке (если угодно)
+                if (gameFinished) {
+                    // можно чуток подпрыгнуть
+                    heartElement.style.animation = 'none';
+                    heartElement.offsetHeight; // трюк для рестарта анимации
+                    heartElement.style.animation = 'winSpin 0.8s infinite linear, sparkle 0.6s infinite alternate';
+                }
+            });
+
+            // Опционально: обработка долгого нажатия и т.п. не нужна
+
+            // Скрываем меню (для Telegram Mini App)
+            if (window.Telegram?.WebApp) {
+                Telegram.WebApp.expand(); // Растянуть на весь экран
+                Telegram.WebApp.enableClosingConfirmation(); // спросить при закрытии
+            }
+        });
+    </script>
+</body>
+</html>
